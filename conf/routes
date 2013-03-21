@@ -1,0 +1,15 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET     /                           controllers.Users.main
+GET     /login                      controllers.Users.loginPage
+GET     /redirectcode               controllers.Users.redirectCode(code)
+GET     /logout                     controllers.Application.logout
+
+# Javascript routing
+GET     /assets/javascripts/routes  controllers.Application.javascriptRoutes
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.at(path="/public", file)
