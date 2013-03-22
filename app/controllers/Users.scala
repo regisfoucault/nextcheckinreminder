@@ -14,6 +14,8 @@ import play.api.libs.ws.WS
 import scala.concurrent._
 import ExecutionContext.Implicits.global
 
+import views._
+
 
 case class UserData(
   prename: String,
@@ -40,7 +42,7 @@ object Users extends Controller with Secured {
             picSuffix <- (response.json \ "response" \ "user" \ "photo" \ "suffix").asOpt[String]
             email <- (response.json \ "response" \ "user" \ "contact" \ "email").asOpt[String]
           } yield {
-            Ok("got you " + firstName  + " "+ lastName + " " + email)
+            Ok(html.app(fUserId, firstName, lastName, picPrefix + "110x110" + picSuffix, email, user.token, getDate))
           }) getOrElse Ok("problem parsing json dude !")
         }
       }
@@ -49,7 +51,7 @@ object Users extends Controller with Secured {
 
   def loginPage() = Action {
     Play.current.configuration.getString("foursquare.client.id") map { clientId =>
-      Ok(views.html.app(clientId))
+      Ok(html.login(clientId))
     } getOrElse NotFound("clientId not found")
   }
 
@@ -65,6 +67,36 @@ object Users extends Controller with Secured {
       elt.toString
     }
   }
+
+  def sendTrigger() = IsAuthenticated { username => implicit request =>
+    triggerForm.bindFromRequest.fold(
+      errors => {
+        println(errors)
+      },
+      myForm => {
+        val vid = myForm._1
+        val text = myForm._2
+        // TODO: store to DB
+        val trigger = new Trigger(
+          id = UUID.randomUUID().toString(),
+          fUId = username,
+          vId = vid,
+          text = text
+        )
+        AppDB.dal.Triggers.saveNew(trigger)
+        // TODO : tell Foursquare to monitor these events
+
+      }
+    )
+    Ok("ok")
+  }
+
+  def triggerForm = Form(
+    tuple(
+      "vid" -> text,
+      "text" -> text
+    )
+  )
 
   def redirectCode(code: String) = Action {
     (for {

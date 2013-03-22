@@ -5,3 +5,13 @@
   text-indent: -9999px;
   display: block;
 }
+
+.output ul li {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  list-style-type: none;
+}
+
+.output ul .selected {
+  background-color: #eeeeee;
+}

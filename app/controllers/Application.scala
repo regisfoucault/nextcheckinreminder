@@ -31,6 +31,7 @@ object Application extends Controller {
     import routes.javascript._
     Ok(
       Routes.javascriptRouter("jsRoutes")(
+        Users.sendTrigger
       )
     ).as("text/javascript")
   }
