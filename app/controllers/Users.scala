@@ -106,20 +106,21 @@ object Users extends Controller with Secured {
       println(feedUrl)
       Async {
         WS.url(feedUrl).get().map { response =>
-          val access_token = (response.json \ "access_token").as[String]
-          Async {
-            WS.url("https://api.foursquare.com/v2/users/self?oauth_token=" + access_token + "&v=" + getDate).get().map { response =>
-              (for {
-                fUserId <- (response.json \ "response" \ "user" \ "id").asOpt[String]
-                /*firstName <- (response.json \ "response" \ "user" \ "firstName").asOpt[String]
-                lastName <- (response.json \ "response" \ "user" \ "lastName").asOpt[String]
-                picPrefix <- (response.json \ "response" \ "user" \ "photo" \ "prefix").asOpt[String]*/
-              } yield {
-                AppDB.dal.Users.storeToken(fUserId, access_token)
-                Redirect(routes.Users.main).withSession(Security.username -> fUserId)
-              }) getOrElse Ok("problem parsing json dude !")
+          (response.json \ "access_token").asOpt[String] map { access_token =>
+            Async {
+              WS.url("https://api.foursquare.com/v2/users/self?oauth_token=" + access_token + "&v=" + getDate).get().map { response =>
+                (for {
+                  fUserId <- (response.json \ "response" \ "user" \ "id").asOpt[String]
+                  /*firstName <- (response.json \ "response" \ "user" \ "firstName").asOpt[String]
+                  lastName <- (response.json \ "response" \ "user" \ "lastName").asOpt[String]
+                  picPrefix <- (response.json \ "response" \ "user" \ "photo" \ "prefix").asOpt[String]*/
+                } yield {
+                  AppDB.dal.Users.storeToken(fUserId, access_token)
+                  Redirect(routes.Users.main).withSession(Security.username -> fUserId)
+                }) getOrElse Ok("problem parsing json dude !")
+              }
             }
-          }
+          } getOrElse BadRequest("unable to parse token")
         }
       }
     }) getOrElse BadRequest
