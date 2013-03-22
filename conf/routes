@@ -9,7 +9,7 @@ GET     /redirectcode               controllers.Users.redirectCode(code)
 GET     /logout                     controllers.Application.logout
 POST    /trigger                    controllers.Users.sendTrigger
 
-POST    /newcheckin                 controllsers.Users.newCheckIn
+POST    /newcheckin                 controllers.Triggers.newCheckIn
 
 # Javascript routing
 GET     /assets/javascripts/routes  controllers.Application.javascriptRoutes
