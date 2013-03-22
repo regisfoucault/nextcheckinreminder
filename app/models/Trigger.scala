@@ -5,7 +5,7 @@ case class Trigger(
   fUId: String,
   vId: String,
   text: String
-) 
+)
 
 trait TriggerComponent {
   this: Profile =>

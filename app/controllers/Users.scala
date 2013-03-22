@@ -71,24 +71,19 @@ object Users extends Controller with Secured {
   def sendTrigger() = IsAuthenticated { username => implicit request =>
     triggerForm.bindFromRequest.fold(
       errors => {
-        println(errors)
+        BadRequest(errors.toString())
       },
       myForm => {
-        val vid = myForm._1
-        val text = myForm._2
-        // TODO: store to DB
         val trigger = new Trigger(
           id = UUID.randomUUID().toString(),
           fUId = username,
-          vId = vid,
-          text = text
+          vId = myForm._1,
+          text = myForm._2
         )
         AppDB.dal.Triggers.saveNew(trigger)
-        // TODO : tell Foursquare to monitor these events
-
+        Ok("event saved")
       }
     )
-    Ok("ok")
   }
 
   def triggerForm = Form(
