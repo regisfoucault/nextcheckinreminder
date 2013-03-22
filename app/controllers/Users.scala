@@ -50,9 +50,12 @@ object Users extends Controller with Secured {
   }
 
   def loginPage() = Action {
-    Play.current.configuration.getString("foursquare.client.id") map { clientId =>
-      Ok(html.login(clientId))
-    } getOrElse NotFound("clientId not found")
+    (for {
+      clientId <- Play.current.configuration.getString("foursquare.client.id")
+      redirectUri <- Play.current.configuration.getString("foursquare.client.redirectUri")
+    } yield {
+      Ok(html.login(clientId, redirectUri))
+    }) getOrElse NotFound("clientId and/or redirectUri not found")
   }
 
   def getDate() = {

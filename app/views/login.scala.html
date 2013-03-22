@@ -1,4 +1,4 @@
-@(clientId: String)
+@(clientId: String, redirectUri: String)
 
 @import helper._
 
@@ -6,7 +6,7 @@
 
   <div class="container">
     <div class="row">
-      <a href="https://foursquare.com/oauth2/authenticate?client_id=@clientId&response_type=code&redirect_uri=http://localhost:9000/redirectcode" class="connect-btn" >Connect
+      <a href="https://foursquare.com/oauth2/authenticate?client_id=@clientId&response_type=code&redirect_uri=@redirectUri" class="connect-btn" >Connect
       </a>
     </div>
   </div>
