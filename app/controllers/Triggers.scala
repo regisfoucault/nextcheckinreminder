@@ -16,12 +16,9 @@ import ExecutionContext.Implicits.global
 
 import views._
 
-/*case class Trigger(
-  id: String,
-  fUId: String,
-  vId: String,
-  text: String
-)*/
+case class CheckinData(
+  json: String
+)
 
 object Triggers extends Controller with Secured {
 
@@ -31,8 +28,22 @@ object Triggers extends Controller with Secured {
 
   def newCheckIn() = Action { implicit request =>
     println("ok")
-    println(request.toString())
-    Ok("thx")
+    userForm.bindFromRequest.fold(
+      errors => {
+        println(errors)
+        BadRequest
+      },
+      json => {
+        println(json)
+        Ok("thx")
+      }
+    )
   }
+
+  def userForm = Form(
+    mapping(
+      "json" -> text
+    )(CheckinData.apply)(CheckinData.unapply)
+  )
 
 }
