@@ -23,6 +23,11 @@ trait TriggerComponent {
       this.insert(trigger)
     }
 
+    def doLaunch(fUId: String, vid: String)(implicit session: Session) = {
+      val q = for(u <- Triggers if (u.fUId === fUId && u.vId === vid)) yield u
+      q.list()
+    }
+
     /*def get(id: String)(implicit session: Session): Option[User] = {
       val q = for(u <- Users if u.id === id) yield u
       q.list().headOption
@@ -33,10 +38,10 @@ trait TriggerComponent {
       q.update(user)
     }*/
 
-    /*def remove(uid: String)(implicit session: Session) = {
-      val q = for(u <- Users if u.id === uid) yield u
+    def remove(id: String)(implicit session: Session) = {
+      val q = for(u <- Triggers if u.id === id) yield u
       q.delete
-    }*/
+    }
   }
 
 }
