@@ -17,7 +17,9 @@ import ExecutionContext.Implicits.global
 import views._
 
 case class CheckinData(
-  json: String
+  secret: String,
+  user: String,
+  checkin: String
 )
 
 object Triggers extends Controller with Secured {
@@ -33,8 +35,10 @@ object Triggers extends Controller with Secured {
         println(errors)
         BadRequest
       },
-      json => {
-        println(json)
+      form => {
+        println(form.secret)
+        println(form.user)
+        println(form.checkin)
         Ok("thx")
       }
     )
@@ -42,7 +46,9 @@ object Triggers extends Controller with Secured {
 
   def userForm = Form(
     mapping(
-      "json" -> text
+      "secret" -> text,
+      "user" -> text,
+      "checkin" -> text
     )(CheckinData.apply)(CheckinData.unapply)
   )
 
