@@ -1,39 +1,39 @@
-$("#search-input").change(function(e){
-  var token = $(e.target).attr("data-token");
-  var date = $(e.target).attr("data-date");
-  var searchInput = $(e.target).val();
+$("#btn-search").click(function(e){
+  var token = $("#search-input").attr("data-token");
+  var date = $("#search-input").attr("data-date");
+  var searchInput = $("#search-input").val();
+  var place = $(".custom-input-place").val();
   $.ajax({
     type: "GET",
-    url: "https://api.foursquare.com/v2/venues/search?near=nantes&limit=20&query=" + searchInput + "&oauth_token=" + token + "&v=" + date,
+    url: "https://api.foursquare.com/v2/venues/search?near=" + place + "&limit=20&query=" + searchInput + "&oauth_token=" + token + "&v=" + date,
     success: function(s) {
       console.log("success");
       console.log(s.response.venues);
 
       var html = "<ul>";
       _.each(s.response.venues, function(venue){
-        html += '<li data-id="' + venue.id + '"">';
-        html += '<a href="' + venue.canonicalUrl + '">' + venue.name + '</a></li>';
-        //console.log(venue);
+        html += '<li data-id="' + venue.id + '">';
+          html += '<div class="row-fluid">';
+            html += '<div class="span3">';
+              html += '<a href="' + venue.canonicalUrl + '">' + venue.name + '</a>';
+            html += '</div>';
+            html += '<div class="span6">' + venue.location.address + '</div>';
+            html += '<div class="span3">' + venue.location.city + '</div>';
+          html += '</div>';
+        html += '</li>';
       })
       html += "</ul>";
       $(".output").html(html);
 
-      $(".select").click(function(e){
-        console.log($($(e.target).parent()[0])[0]);
-        $(".selected-zone").html("ok");
-      })
-
       $(".output ul li").click(function(e) {
-        if ($(e.target).hasClass("selected")) {
-          $(e.target).removeClass("selected");
+        var elt = $($($(e.target).closest("li"))[0]);
+        if (elt.hasClass("selected")) {
+          elt.removeClass("selected");
         } else {
           $(".output ul li").removeClass("selected");
-          $(e.target).addClass("selected");
+          elt.addClass("selected");
         }
-
-        //$(e.target).css("background-color","red");
       })
-
     },
     error: function(e) {
       console.log(e);
@@ -49,8 +49,18 @@ $(".sendTrigger").click(function(e){
       vid : vid,
       text : text
     },
-    success : function(data) { 
+    success : function(data) {
       console.log(data);
+      $(".success-storage").fadeIn("slow", function(){
+        window.setTimeout(function() {
+          $(".success-storage").fadeOut("slow");
+        }, 2000);
+      });
+      //$(".success-storage").css("display", "block");
+      $("#search-input").val("");
+      $(".custom-input-place").val("");
+      $(".output").html("");
+      $(".textarea-trigger").val("");
     },
     error: function(e) {
       console.log(e);
