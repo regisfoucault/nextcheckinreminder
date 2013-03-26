@@ -1,9 +1,5 @@
 .connect-btn {
-  background-image: url("https://playfoursquare.s3.amazonaws.com/press/logo/connect-white.png");
-  height: 23px;
-  width: 150px;
-  text-indent: -9999px;
-  display: block;
+  
 }
 
 .row-fluid [class*="span"] .output {
@@ -30,8 +26,8 @@
 }
 
 body {
-  padding-top: 20px;
-  padding-bottom: 40px;
+  /*padding-top: 20px;
+  padding-bottom: 40px;*/
 }
 
 .container-narrow {
@@ -84,3 +80,47 @@ h3 a:hover {
   padding-top: 7px;
   padding-bottom: 7px;
 }
+
+.login-box{
+  text-align: center;
+}
+
+.footer {
+  text-align: center;
+}
+
+.footer img {
+  height: 50px;
+}
+
+#wrap {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin: 0 auto -60px;
+}
+
+html, body {
+  height: 100%;
+}
+.push, .footer {
+  height: 60px;
+}
+
+.footer hr {
+  margin-bottom: 0px;
+  margin-top: 0px;
+}
+
+.login-main-container {
+  padding-top: 10%;
+}
+
+.app-main-container {
+  padding-top: 20px;
+}
+
+.footer a, .footer a:hover, .footer a:visited {
+  color: #E82A37;
+}
+
