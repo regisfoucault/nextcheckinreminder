@@ -3,12 +3,25 @@
 @import helper._
 
 @main("NCR") {
-
-  <div class="container">
-    <div class="row">
-      <a href="https://foursquare.com/oauth2/authenticate?client_id=@clientId&response_type=code&redirect_uri=@redirectUri" class="connect-btn" >Connect
-      </a>
+  
+  <div class="band"></div>
+  <div id="wrap">
+    <div class="container-narrow login-main-container">
+      <div class="row-fluid">
+        <div class="login-box">
+          <h1>Next checkin reminder</h1>
+          <p class="lead">Receive a reminder next time you check in in a place.</p>
+          </br>
+          <a  href="https://foursquare.com/oauth2/authenticate?client_id=@clientId&response_type=code&redirect_uri=@redirectUri" class="btn btn-success connect-btn" >Login with Foursquare</a>
+        </div>
+      </div>
     </div>
+    <div class="push"></div>
+  </div>
+
+  <div class="footer">
+    <hr>
+    <img src="https://playfoursquare.s3.amazonaws.com/press/logo/poweredByFoursquare_gray.png" />
   </div>
 
   
