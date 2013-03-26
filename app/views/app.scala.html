@@ -3,63 +3,71 @@
 @import helper._
 
 @main("NCR") {
-  <div class="band"></div>
-  <div class="container-narrow">
-    <div class="masthead">
-      <ul class="nav nav-pills pull-right">
-        <li><a href="/logout">Logout</a></li>
-      </ul>
-      <h3 class="muted"><a href="/">NextCheckinReminder</a></h3>
-    </div>
+  <div id="wrap">
+    <div class="band"></div>
+    <div class="container-narrow app-main-container">
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li><a href="/logout">Logout</a></li>
+        </ul>
+        <h3 class="muted"><a href="/">NextCheckinReminder</a></h3>
+      </div>
 
-    <hr>
+      <hr>
 
-    <div class="container-main">
-      <div class="success-storage fade in">
-        <div class="alert alert-block alert-success">
-          <button type="button" class="close" data-dismiss="alert">×</button>
-          <strong>Well done!</strong> Trigger saved !
+      <div class="container-main">
+        <div class="success-storage fade in">
+          <div class="alert alert-block alert-success">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>Well done!</strong> Trigger saved !
+          </div>
         </div>
-      </div>
-      <div class="row-fluid">
-        Ok, we got you @firstName @lastName !
-      </div>
-      </br>
+        <div class="row-fluid">
+          Ok, we got you @firstName @lastName !
+        </div>
+        </br>
 
 
-      <div class="row-fluid">
-        <div class="span9">
-          <div class="row-fluid">
-            <div class="span12">
-              <div class="row-fluid">
-                <div class="span6">
-                  <input class="custom-input" id="search-input" data-token=@token data-date=@dateFormated type="text" placeholder="Company Campus, restaurant, etc.">
-                </div>
-                <div class="span6">
-                  <div class="row-fluid">
-                    <div class="span9">
-                      <p>where ?  
-                      <input class="custom-input-place" id="place-input" type="text" placeholder="Nantes"></p>
-                    </div>
-                    <div class="span3">
-                      <button id="btn-search" class="btn btn-success">Search</button>
+        <div class="row-fluid">
+          <div class="span9">
+            <div class="row-fluid">
+              <div class="span12">
+                <div class="row-fluid">
+                  <div class="span6">
+                    <input class="custom-input" id="search-input" data-token=@token data-date=@dateFormated type="text" placeholder="Company Campus, restaurant, etc.">
+                  </div>
+                  <div class="span6">
+                    <div class="row-fluid">
+                      <div class="span9">
+                        <p>where ?  
+                        <input class="custom-input-place" id="place-input" type="text" placeholder="Nantes"></p>
+                      </div>
+                      <div class="span3">
+                        <button id="btn-search" class="btn btn-success">Search</button>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+            <div class="span12 output"></div>
           </div>
-          <div class="span12 output"></div>
-        </div>
-        
-        <div class="span3">
-          <div class="row-fuid selected-zone"></div>
-          <textarea class="textarea-trigger" rows="3"></textarea>
-          <button class="btn sendTrigger">Save</button>
+          
+          <div class="span3">
+            <div class="row-fuid selected-zone"></div>
+            <textarea class="textarea-trigger" rows="3"></textarea>
+            <button class="btn sendTrigger">Save</button>
+          </div>
         </div>
       </div>
+      
     </div>
-    
+    <div class="push"></div>
+  </div>
+
+  <div class="footer">
+    <hr>
+    <img src="https://playfoursquare.s3.amazonaws.com/press/logo/poweredByFoursquare_gray.png" />
   </div>
 
   

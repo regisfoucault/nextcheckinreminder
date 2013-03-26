@@ -115,3 +115,7 @@ html, body {
 .login-main-container {
   padding-top: 10%;
 }
+
+.app-main-container {
+  padding-top: 20px;
+}
