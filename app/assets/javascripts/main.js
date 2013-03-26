@@ -3,6 +3,7 @@ $("#btn-search").click(function(e){
   var date = $("#search-input").attr("data-date");
   var searchInput = $("#search-input").val();
   var place = $(".custom-input-place").val();
+  $(".output").html('<i class="icon-spinner icon-spin"></i> Asking Foursquare ... ');
   $.ajax({
     type: "GET",
     url: "https://api.foursquare.com/v2/venues/search?near=" + place + "&limit=20&query=" + searchInput + "&oauth_token=" + token + "&v=" + date,
