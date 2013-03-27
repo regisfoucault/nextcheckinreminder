@@ -21,8 +21,8 @@ $("#btn-search").click(function(e){
                 html += '<div class="span3">';
                   html += '<a href="' + venue.canonicalUrl + '">' + venue.name + '</a>';
                 html += '</div>';
-                html += '<div class="span6">' + venue.location.address + '</div>';
-                html += '<div class="span3">' + venue.location.city + '</div>';
+                html += '<div class="span6">' + checkIfValue(venue.location.address) + '</br>' + checkIfValue(venue.location.city)  + '</div>';
+                html += '<div class="span3">' + '<i class="icon-map-marker"></i> ' + venue.stats.checkinsCount + '</br><i class="icon-heart"></i> ' + venue.likes.count + '</div>';
               html += '</div>';
             html += '</li>';
           })
@@ -50,6 +50,15 @@ $("#btn-search").click(function(e){
     })
   }
 });
+
+var checkIfValue = function(elt) {
+  console.log(elt);
+  if (elt == "" || typeof(elt) == "undefined") {
+    return "";
+  } else {
+    return elt;
+  }
+}
 
 $(".custom-input-place").focus(function(){
   $(".custom-input-place").removeClass("error");
