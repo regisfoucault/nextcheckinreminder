@@ -13,6 +13,7 @@ $("#btn-search").click(function(e){
       type: "GET",
       url: "https://api.foursquare.com/v2/venues/search?near=" + place + "&limit=20&query=" + searchInput + "&oauth_token=" + token + "&v=" + date,
       success: function(s) {
+        s = JSON.parse(s);
         if (s.response.venues.length>0) {
           var html = "<ul>";
           _.each(s.response.venues, function(venue){
