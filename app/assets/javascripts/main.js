@@ -3,7 +3,6 @@ $("#btn-search").click(function(e){
   var date = $("#search-input").attr("data-date");
   var searchInput = $("#search-input").val();
   var place = $(".custom-input-place").val();
-  console.log(place);
   if (place == "") {
     $(".custom-input-place").addClass("error");
     $(".custom-input-place").val("Where ?");
@@ -13,7 +12,9 @@ $("#btn-search").click(function(e){
       type: "GET",
       url: "https://api.foursquare.com/v2/venues/search?near=" + place + "&limit=20&query=" + searchInput + "&oauth_token=" + token + "&v=" + date,
       success: function(s) {
-        s = JSON.parse(s);
+        if (typeof(s)=="string") {
+          s = JSON.parse(s);
+        }
         if (s.response.venues.length>0) {
           var html = "<ul>";
           _.each(s.response.venues, function(venue){
