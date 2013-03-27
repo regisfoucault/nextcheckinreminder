@@ -2,7 +2,10 @@ package models
 
 case class User(
   id: String,
-  token: String
+  token: String,
+  firstName: String,
+  lastName: String,
+  email: String
 ) 
 
 trait UserComponent {
@@ -13,18 +16,26 @@ trait UserComponent {
   object Users extends Table[User]("users") {
     def id = column[String]("id", O.PrimaryKey)
     def token = column[String]("token")
-    def * = id ~ token <> (User, User.unapply _)
+    def firstName = column[String]("firstname")
+    def lastName = column[String]("lastname")
+    def email = column[String]("email")
+    def * = id ~ token ~ firstName ~ lastName ~ email <> (User, User.unapply _)
 
-    def storeToken(id: String, token: String)(implicit session: Session) = {
+    def storeToken(id: String, firstName: String, lastName: String, email: String, token: String)(implicit session: Session) = {
       get(id) map { user =>
-        save(user.copy(token = token))
+        save(user.copy(
+          token = token,
+          firstName = firstName,
+          lastName = lastName,
+          email = email
+        ))
       } getOrElse {
-        saveNew(id, token)
+        saveNew(id, token, firstName, lastName, email)
       }
     }
 
-    def saveNew(id: String, token: String)(implicit session: Session) = {
-      this.insert(new User(id, token))
+    def saveNew(id: String, token: String, firstName: String, lastName: String, email: String)(implicit session: Session) = {
+      this.insert(new User(id, token, firstName, lastName, email))
     }
 
     def get(id: String)(implicit session: Session): Option[User] = {
