@@ -11,7 +11,7 @@ object ApplicationBuild extends Build {
     // Add your project dependencies here,
     jdbc,
     "com.typesafe.slick" %% "slick" % "1.0.0",
-    //"postgresql" % "postgresql" % "9.1-901-1.jdbc4",
+    "postgresql" % "postgresql" % "9.1-901-1.jdbc4",
     "org.mindrot" % "jbcrypt" % "0.3m",
     "joda-time" % "joda-time" % "2.0",
     "org.joda" % "joda-convert" % "1.1",
