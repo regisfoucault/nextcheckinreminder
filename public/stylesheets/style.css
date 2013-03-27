@@ -154,3 +154,12 @@ html, body {
 .footer-separator-right {
   margin-right: 13px;
 }
+
+.information {
+  color: E82A37; 
+}
+
+input.error {
+  border-color: #E82A37;
+  color: #E82A37;
+}
