@@ -116,14 +116,23 @@ object Users extends Controller with Secured {
                   lastName <- (response.json \ "response" \ "user" \ "lastName").asOpt[String]
                   email <- (response.json \ "response" \ "user" \ "contact" \ "email").asOpt[String]
                 } yield {
-                  // send mail to admin
-                  val mail = use[MailerPlugin].email
-                  mail.setSubject("NextCheckInReminder")
-                  mail.addRecipient("regisfoucault@gmail.com")
-                  mail.addFrom("NextCheckInReminder <regis@nextcheckinreminder.mailgun.org>")
-                  mail.send("New user : " + firstName + " " + lastName)
-
-                  AppDB.dal.Users.storeToken(fUserId, firstName, lastName, email, access_token)
+                  AppDB.dal.Users.get(fUserId) map { user =>
+                    AppDB.dal.Users.save(user.copy(
+                      token = access_token,
+                      firstName = firstName,
+                      lastName = lastName,
+                      email = email
+                    ))
+                  } getOrElse {
+                    val userToSave = new User(fUserId, access_token, firstName, lastName, email)
+                    AppDB.dal.Users.saveNew(userToSave)
+                    // send mail to admin
+                    val mail = use[MailerPlugin].email
+                    mail.setSubject("NextCheckInReminder")
+                    mail.addRecipient("regisfoucault@gmail.com")
+                    mail.addFrom("NextCheckInReminder <regis@nextcheckinreminder.mailgun.org>")
+                    mail.send("New user : " + firstName + " " + lastName)
+                  }
                   Redirect(routes.Users.main).withSession(Security.username -> fUserId)
                 }) getOrElse Ok("problem parsing json dude !")
               }
