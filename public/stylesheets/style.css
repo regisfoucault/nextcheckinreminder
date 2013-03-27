@@ -119,3 +119,8 @@ html, body {
 .app-main-container {
   padding-top: 20px;
 }
+
+.my-helper {
+  font-style: italic;
+  color: #999;
+}
