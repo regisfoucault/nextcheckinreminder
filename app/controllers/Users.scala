@@ -103,7 +103,6 @@ object Users extends Controller with Secured {
       redirectUri <- Play.current.configuration.getString("foursquare.client.redirectUri")
     } yield {
       val feedUrl = "https://foursquare.com/oauth2/access_token?client_id=" + clientId + "&client_secret=" + clientSecret + "&grant_type=authorization_code&redirect_uri=" + redirectUri + "&code=" + code
-      println(feedUrl)
       Async {
         WS.url(feedUrl).get().map { response =>
           (response.json \ "access_token").asOpt[String] map { access_token =>
@@ -111,11 +110,11 @@ object Users extends Controller with Secured {
               WS.url("https://api.foursquare.com/v2/users/self?oauth_token=" + access_token + "&v=" + getDate).get().map { response =>
                 (for {
                   fUserId <- (response.json \ "response" \ "user" \ "id").asOpt[String]
-                  /*firstName <- (response.json \ "response" \ "user" \ "firstName").asOpt[String]
+                  firstName <- (response.json \ "response" \ "user" \ "firstName").asOpt[String]
                   lastName <- (response.json \ "response" \ "user" \ "lastName").asOpt[String]
-                  picPrefix <- (response.json \ "response" \ "user" \ "photo" \ "prefix").asOpt[String]*/
+                  email <- (response.json \ "response" \ "user" \ "contact" \ "email").asOpt[String]
                 } yield {
-                  AppDB.dal.Users.storeToken(fUserId, access_token)
+                  AppDB.dal.Users.storeToken(fUserId, firstName, lastName, email, access_token)
                   Redirect(routes.Users.main).withSession(Security.username -> fUserId)
                 }) getOrElse Ok("problem parsing json dude !")
               }
