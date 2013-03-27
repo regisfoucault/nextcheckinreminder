@@ -44,11 +44,10 @@ object Triggers extends Controller with Secured {
           email <- (Json.parse(checkin) \ "user" \ "contact" \ "email").asOpt[String]
         } yield {
           AppDB.dal.Triggers.doLaunch(userId, venueId) map { trigger =>
-            println(trigger)
             val mail = use[MailerPlugin].email
             mail.setSubject("NextCheckInReminder")
-            mail.addRecipient("regisfoucault@gmail.com")
-            mail.addFrom("Régis from NextCheckInReminder <regis@nextcheckinreminder.mailgun.org>")
+            mail.addRecipient(email)
+            mail.addFrom("NextCheckInReminder <regis@nextcheckinreminder.mailgun.org>")
             mail.send(trigger.text)
 
             AppDB.dal.Triggers.remove(trigger.id)
