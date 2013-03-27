@@ -15,7 +15,7 @@ object Global extends GlobalSettings with DBeable {
     lazy val dal = getDal
     database.withSession {
       implicit session: Session =>
-        dal.create
+        scala.util.Try(dal.create)
     }
   }
 

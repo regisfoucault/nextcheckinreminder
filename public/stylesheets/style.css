@@ -120,7 +120,7 @@ html, body {
   padding-top: 20px;
 }
 
-.footer a, .footer a:hover, .footer a:visited {
-  color: #E82A37;
+.my-helper {
+  font-style: italic;
+  color: #999;
 }
-
