@@ -15,14 +15,13 @@
   padding-bottom: 10px;
   list-style-type: none;
   padding-left: 10px;
+  border-top:solid 1px #cccccc;
+  color: #222222;
+  font-size: 13px;
 }
 
 .output ul .selected {
   background-color: #eeeeee;
-  border-style: solid;
-  border-color: #B8B8B8;
-  border-width: 1px;
-  border-radius: 6px;
 }
 
 body {
@@ -131,20 +130,9 @@ html, body {
 }
 
 .footer-container{
-  width: 41%;
-  min-width: 512px;
   margin-left: auto;
   margin-right: auto;
   height: 97%;
-}
-
-.footer-container img {
-  float: left;
-}
-
-.footer-container div {
-  float: left;
-  margin-top: 15px;
 }
 
 .footer-separator-left {
@@ -153,4 +141,31 @@ html, body {
 
 .footer-separator-right {
   margin-right: 13px;
+}
+
+.information {
+  color: E82A37; 
+}
+
+input.error {
+  border-color: #E82A37;
+  color: #E82A37;
+}
+
+i {
+  font-size: 10px;
+}
+
+.footer{
+  text-align: center;
+}
+
+.footer-links li {
+  display: inline;
+  padding: 0 2px;
+}
+
+.footer-foursquare {
+  height: 50px;
+  width: 198px;
 }

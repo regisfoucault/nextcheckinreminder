@@ -21,21 +21,8 @@ trait UserComponent {
     def email = column[String]("email")
     def * = id ~ token ~ firstName ~ lastName ~ email <> (User, User.unapply _)
 
-    def storeToken(id: String, firstName: String, lastName: String, email: String, token: String)(implicit session: Session) = {
-      get(id) map { user =>
-        save(user.copy(
-          token = token,
-          firstName = firstName,
-          lastName = lastName,
-          email = email
-        ))
-      } getOrElse {
-        saveNew(id, token, firstName, lastName, email)
-      }
-    }
-
-    def saveNew(id: String, token: String, firstName: String, lastName: String, email: String)(implicit session: Session) = {
-      this.insert(new User(id, token, firstName, lastName, email))
+    def saveNew(user: User)(implicit session: Session) = {
+      this.insert(user)
     }
 
     def get(id: String)(implicit session: Session): Option[User] = {
