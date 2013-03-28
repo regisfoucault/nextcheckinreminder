@@ -54,7 +54,6 @@ $("#btn-search").click(function(e){
 });
 
 var checkIfValue = function(elt) {
-  console.log(elt);
   if (elt == "" || typeof(elt) == "undefined") {
     return "";
   } else {
@@ -76,7 +75,6 @@ $(".sendTrigger").click(function(e){
       text : text
     },
     success : function(data) {
-      console.log(data);
       $(".success-storage").fadeIn("slow", function(){
         window.setTimeout(function() {
           $(".success-storage").fadeOut("slow");
